@@ -30,7 +30,7 @@ class GameTest {
         // Create a new Game object with size 10 and initial population of 11
         val game = Game(10, 11)
 
-        // Verify that the number of ones on the board is 5
+        // Verify that the number of ones on the board is 10
         assertEquals(10, game.boardState.count { it == 1 })
     }
 

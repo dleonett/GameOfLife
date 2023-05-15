@@ -72,13 +72,15 @@ class Game {
         }
         println(boardState)
 
-        return boardState.count { it == 1 } == 0
+        return isGameOver()
     }
 
     fun autoPlay() {
-        while (boardState.count { it == 1 } > 0) {
+        while (!isGameOver()) {
             nextStep()
         }
     }
+
+    fun isGameOver() = boardState.count { it == 1 } == 0
 
 }

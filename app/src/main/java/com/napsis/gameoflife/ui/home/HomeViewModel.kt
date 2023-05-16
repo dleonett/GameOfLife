@@ -16,18 +16,28 @@ class HomeViewModel : ViewModel() {
     val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
 
     private lateinit var game: Game
+    private val size = 10
+    private val population = 8
+    private val updateMillis = 600L
 
     init {
-        reset()
+        _uiState.update {
+            it.copy(
+                boardState = MutableList(size) { Game.CellType.EMPTY },
+                isGameInProgress = false,
+                reset = true
+            )
+        }
     }
 
     private fun reset() {
-        game = Game(15, 10)
+        game = Game(size, population)
 
         _uiState.update {
             it.copy(
                 boardState = game.boardState.toList(),
-                isGameInProgress = false
+                isGameInProgress = false,
+                reset = true
             )
         }
     }
@@ -38,25 +48,30 @@ class HomeViewModel : ViewModel() {
         viewModelScope.launch {
             _uiState.update {
                 it.copy(
-                    isGameInProgress = true
+                    isGameInProgress = true,
+                    reset = false
                 )
             }
+
+            delay(updateMillis)
 
             while (!game.isGameOver()) {
                 game.nextStep()
 
                 _uiState.update {
                     it.copy(
-                        boardState = game.boardState.toList()
+                        boardState = game.boardState.toList(),
+                        reset = false
                     )
                 }
 
-                delay(200)
+                delay(updateMillis)
             }
 
             _uiState.update {
                 it.copy(
-                    isGameInProgress = false
+                    isGameInProgress = false,
+                    reset = false
                 )
             }
         }

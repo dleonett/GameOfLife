@@ -1,3 +1,9 @@
 package com.napsis.gameoflife.ui.home
 
-data class HomeUiState(val boardState: List<Int>? = null, val isGameInProgress: Boolean = false)
+import com.napsis.gameoflife.data.Game
+
+data class HomeUiState(
+    val boardState: List<Game.CellType>? = null,
+    val isGameInProgress: Boolean = false,
+    val reset: Boolean = false
+)

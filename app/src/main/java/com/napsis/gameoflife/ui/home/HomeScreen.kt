@@ -46,7 +46,7 @@ fun HomeScreen(
             modifier = Modifier.fillMaxWidth()
         ) {
             gameUiState.boardState?.let { list ->
-                list.forEachIndexed { index, item ->
+                list.forEachIndexed { _, item ->
                     Box(
                         modifier = Modifier
                             .weight(1f)
@@ -66,7 +66,7 @@ fun HomeScreen(
                                         // be displayed out of bounds.
                                         SizeTransform(clip = false)
                                     )
-                            }
+                            }, label = ""
                         ) { targetCount ->
                             if (targetCount == Game.CellType.EMPTY) {
                                 // do nothing
